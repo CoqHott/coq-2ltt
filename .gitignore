@@ -19,3 +19,6 @@ Makefile
 *.mllib.d
 *.o
 *.aux
+
+# dependency
+Categories

@@ -69,6 +69,7 @@ Notation "x ≡ y"
   := (@Eq _ x y) (at level 70, no associativity) : type_scope.
 
 Axiom Eq_UIP : forall {A: Type} {x y: A} (p q: x ≡ y), p ≡ q.
+Axiom Eq_proof_irrel : forall {P : Prop} (p q : P), p ≡ q.
 
 Lemma Eq_rew A a y P (X : P a) (H : a ≡ y :> A) : P y.
 Proof. rewrite <- H. assumption. Defined.

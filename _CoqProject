@@ -1,3 +1,4 @@
+-R Categories Categories
 -R . ModelStructure
 -I src
 
