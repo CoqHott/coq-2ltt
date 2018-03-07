@@ -1,5 +1,5 @@
 From Categories Require Import Category.
-Require Import Functor.
+From Categories Require Import Functor.
 
 Require Import ModelStructure.MLTT2.Overture.
 
@@ -8,6 +8,8 @@ Require Import Coq.Logic.ProofIrrelevance.
 
 Notation "'λ' x .. y , t" := (fun x => .. (fun y => t) ..) (at level 200, x binder, y binder, right associativity).
 Notation "'Π' x .. y , P" := (forall x, .. (forall y, P) ..) (at level 200, x binder, y binder, right associativity) : type_scope.
+
+(* sigT is redefined using primitive projections in ModelStructure.Overture.*)
 Notation "'Σ' x .. y , P" := (sigT (fun x => .. (sigT (fun y => P)) ..)) (at level 200, x binder, y binder)  : type_scope.
 Notation "A ⇒ B" := (Functor A B) (at level 70).
 Notation "a ⟶ b" := (Hom a b) (at level 90, b at level 200, right associativity).
@@ -43,28 +45,46 @@ Section Invcat.
   Open Scope object_scope.
   Open Scope morphism_scope.
 
+  (* We have to explicitly provide a family in which transport
+   happens, because in this particular case Coq cannot infer it. But
+   if we inversed paths like [p: y ≡ x], the could used the notation
+   for transport without the explicit type family argument. *)
   Definition id_reflect {C D: Category} (φ : C ⇒ D) :=
-    Π {x y : C} (f : x ⟶ y), (Σ q, (q ▹ˢ (φ _a f)) ≡ id)  → Σ p, (p ▹ˢ f) ≡ id.
+    Π {x y : C} (f : x ⟶ y),
+    (Σ (q : φ _o x ≡ φ _o y), (Etransport (λ x, x ⟶ φ _o y) q (φ _a f)) ≡ id)
+    → Σ (p : x ≡ y), (Etransport (λ x, x ⟶ y) p f) ≡ id.
 
  (* The definition of "refect identity" property specific to ℕop. *)
  (* Though it doesn't require for φ(f) to be the identity we will show, that *)
  (* id_reflect(C,ℕop) and id_reflect_ℕop(C) are logically equivalent *)
  Definition id_reflect_ℕop {C : Category} (φ : C ⇒ ℕop) :=
-    Π {x y : C} (f : x ⟶ y), φ _o x ≡ φ _o y → (Σ p, p ▹ˢ f ≡ id).
+   Π {x y : C} (f : x ⟶ y),
+   φ _o x ≡ φ _o y → Σ (p : x ≡ y), Etransport (λ x, x ⟶ y) p f ≡ id.
 
+ Class ReflectsIds {C D : Category} (φ : C ⇒ D) :=
+   reflecting_id : id_reflect φ.
+
+ (* showing that id_reflect_ℕop φ ↔ id_reflect φ *)
+
+ Definition IffT (A B : Type) := (A -> B) * (B -> A).
+ Notation "A <--> B" := (IffT A B) (at level 70).
+
+ Lemma id_reflect_ℕop_IffT {C : Category} {φ : C ⇒ ℕop} : id_reflect_ℕop φ <--> id_reflect φ.
+ Proof.
+   split.
+   - intros id_r_ℕop x y f s.
+     destruct s as [p q]. unfold id_reflect_ℕop in *. destruct (id_r_ℕop _ _ f p) as [p₁ p₂].
+     apply (exist _ p₁). destruct p₁. simpl in *. exact p₂.
+   - intros id_r x y f q.
+     (* here we use the fact that any morphism x ⟶ x in ℕop only can be an identity morphism *)
+     assert (f_is_id : Etransport (λ x, x ⟶ φ _o y) q (φ _a f) ≡ id)
+       by apply (hom_ℕop_id _ _).
+     destruct (id_r _ _ f (exist _ q f_is_id)) as [p₁ p₂].
+     apply (exist _ p₁). destruct p₁. simpl in *. apply p₂.
+ Qed.
+
+ Class InvCat (C : Category) :=
+   { φ_ic : C ⇒ ℕop;
+     φ_reflects_id : ReflectsIds φ_ic }.
  
-(* ref:def:inverse-category *)
-(*  Definition 3.8 *)
-(* namespace invcat *)
-(*   open sigma.ops iff *)
-(*   definition id_reflect {C D: Category} (φ : C ⇒ D) := *)
-(*     Π ⦃x y : C⦄ (f : x ⟶ y), (Σ (q : φ x = φ y), q ▹ φ f = id) → Σ (p : x = y),  p ▹ f = id *)
-
-(*   Definition id_reflect' {C D: Category} := *)
-(*   Π (φ : C ⇒ D) ⦃x y : C⦄ (f : x ⟶ y), (Σ (q : φ x = φ y), q ▹ φ f = id) → Σ (p : x = y),  p ▹ f = id *)
-
-(*   -- definition if "refect identity" property specific to ℕop *)
-(*   -- though it doesn't require for φ(f) to be the identity we will show, that *)
-(*   -- id_reflect(C,ℕop) and id_reflect_ℕop(C) are logically equivalent *)
-(*   definition id_reflect_ℕop {C : Category} (φ : C ⇒ ℕop) := *)
-(*     Π ⦃x y : C⦄ (f : x ⟶ y), φ x = φ y → (Σ (p : x = y), p ▹ f = id) *)
+End Invcat.

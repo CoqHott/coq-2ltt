@@ -1,4 +1,3 @@
--R Categories Categories
 -R . ModelStructure
 -I src
 
@@ -25,3 +24,5 @@ MLTT2F/Equivalences.v
 MLTT2F/Cylinder.v
 MLTT2F/Fibrant_replacement.v
 MLTT2F/Model_structure.v
+
+Reedy/Inverse.v
