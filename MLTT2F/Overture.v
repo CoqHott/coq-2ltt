@@ -140,7 +140,7 @@ Proof. rew H. Defined.
 
 Definition Eq_to_paths {A : Type} {FibA: Fibrant A} {x y : A} (p : x ≡ y) : x = y :=
   match p with
-    | refl => idpath
+    | eq_refl => idpath
   end.
 
 

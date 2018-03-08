@@ -51,17 +51,20 @@ Open Scope type_scope.
 Delimit Scope eq_scope with eq.
 Open Scope eq_scope.
 
-Local Unset Elimination Schemes.
+(* Local Unset Elimination Schemes. *)
 
-Inductive Eq {A: Type} (a: A) : A -> Type :=
-  refl : Eq a a.
+(* Inductive Eq {A: Type} (a: A) : A -> Type := *)
+(*   refl : Eq a a. *)
 
-Arguments refl {A a} , [A] a.
+(* Arguments refl {A a} , [A] a. *)
 
-Scheme Eq_ind := Induction for Eq Sort Type.
-Arguments Eq_ind [A] a P f y e.
-Scheme Eq_rec := Minimality for Eq Sort Type.
-Arguments Eq_rec [A] a P f y e.
+(* Scheme Eq_ind := Induction for Eq Sort Type. *)
+(* Arguments Eq_ind [A] a P f y e. *)
+(* Scheme Eq_rec := Minimality for Eq Sort Type. *)
+(* Arguments Eq_rec [A] a P f y e. *)
+
+Definition Eq {A : Type} := eq (A:=A).
+Definition refl {A : Type}(x : A) := eq_refl (A :=A) x.
 
 Notation "x ≡ y :> A"
   := (@Eq A x y) (at level 70, y at next level, no associativity) : type_scope.
@@ -85,15 +88,16 @@ Defined.
 Arguments Einverse {A x y} p : simpl nomatch.
 
 Definition Econcat {A : Type} {x y z : A} (p : x ≡ y) (q : y ≡ z) : x ≡ z :=
-  match p, q with refl, refl => refl end.
+  (* match p, q with refl, refl => refl end. *)
+  match p, q with eq_refl, eq_refl => eq_refl end.
 Arguments Econcat {A x y z} p q : simpl nomatch.
 
-Notation "'E1'" := refl : eq_scope.
+Notation "'E1'" := eq_refl : eq_scope.
 Notation "p E@ q" := (Econcat p%eq q%eq) (at level 20) : eq_scope.
 Notation "p ^E" := (Einverse p%eq) (at level 3, format "p '^E'") : eq_scope.
 
 Definition Etransport {A : Type} (P : A -> Type) {x y : A} (p : x ≡ y) (u : P x) : P y :=
-  match p with refl => u end.
+  match p with eq_refl => u end.
 Arguments Etransport {A}%type_scope P {x y} p%eq_scope u : simpl nomatch.
 
 Notation "p E# x"
@@ -102,12 +106,12 @@ Notation "p E# x"
 Notation "f ≡≡ g" := (forall x, f x ≡ g x) (at level 70, no associativity) : type_scope.
 
 Definition Eap {A B:Type} (f:A -> B) {x y:A} (p:x ≡ y) : f x ≡ f y
-  := match p with refl => refl end.
+  := match p with eq_refl => eq_refl end.
 Global Arguments Eap {A B}%type_scope f {x y} p%eq_scope.
 
 Definition EapD10 {A} {B: A -> Type} {f g: forall x, B x} (h: f ≡ g)
   : f ≡≡ g
-  := fun x => match h with refl => E1 end.
+  := fun x => match h with eq_refl => E1 end.
 Global Arguments EapD10 {A%type_scope B} {f g} h%eq_scope _.
 
 Definition Eap10 {A B} {f g: A -> B} (h: f ≡ g) : f ≡≡ g

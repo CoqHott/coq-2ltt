@@ -98,7 +98,7 @@ Proof. rew H. Defined.
 
 Definition Eq_to_paths {A : Type} {FibA: Fibrant A} {x y : A} (p : x ≡ y) : x = y :=
   match p with
-    | refl => idpath
+    | eq_refl => idpath
   end.
 
 
@@ -144,7 +144,7 @@ Ltac unmark H := let t := type of H in
                  match t with
                  | myid _ ?tt => change tt in H
                  end.
-Hint Unfold myid : typeclass_instances.    
+Hint Unfold myid : typeclass_instances.
 
 (* If p : x = y  then destruct_path revert all hypothesis depending on x and y.  *)
 (* Then, it applies paths_ind and then it reintroduce reverted hypothesis. *)

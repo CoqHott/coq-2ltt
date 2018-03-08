@@ -3,7 +3,7 @@ Require Import Overture.
 Definition EapD {A:Type} {B:A->Type} (f:forall a:A, B a) {x y:A} (p:x≡y):
   p E# (f x) ≡ f y
   :=
-  match p with refl => refl end.
+  match p with eq_refl => eq_refl end.
 Arguments EapD {A%type_scope B} f {x y} p%eq_scope : simpl nomatch.
 
 Definition Etransport_Vp {A: Type} (P: A -> Type) {x y: A} (p: x ≡ y) (z: P x)
@@ -14,7 +14,7 @@ Defined.
 
 Definition Etransport_compose {A B : Type} {x y : A} (P : B -> Type) (f : A -> B) 
            (p : x ≡ y) (z : P (f x)) :
-  Etransport (fun x0 : A => P (f x0)) p z ≡ Etransport P (Eap f p) z.
+  Etransport (λ x0 : A, P (f x0)) p z ≡ Etransport P (Eap f p) z.
 destruct p. reflexivity.
 Defined.
 
@@ -46,3 +46,20 @@ Definition pr2_eq {A : Type} `{P : A -> Type} {u v : sigT P} (p : u ≡ v)
      E@ (@EapD { x & P x} _ pr2 _ _ p).
 
 Notation "p ..2E" := (pr2_eq p) (at level 3).
+
+Definition Enaturality_transport {X Y : Type}{x x' : X}{P : Y → Type}
+           (f : X → Y)(p : x ≡ x')(u : P (f x)) : Eap f p E# u ≡ Etransport (λ x, P (f x)) p u.
+Proof.
+  destruct p. reflexivity.
+Defined.
+
+Definition Etransport_concat  {A : Type } {a b c: A} (P : A → Type)
+           (p : a ≡ b) (q : b ≡ c) (u : P a) : q E# (p E# u) ≡ p E@ q E# u.
+Proof.
+  destruct p,q. reflexivity.
+Defined.
+
+(* Just an alias *)
+Definition Econcat_inv {A : Type } {a b : A} (P : A → Type) (p : a = b) (u : P a)
+  := Etransport_Vp P p u.
+
