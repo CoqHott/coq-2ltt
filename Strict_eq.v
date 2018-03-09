@@ -12,6 +12,12 @@ Proof.
   destruct p; reflexivity.
 Defined.
 
+Definition Etransport_Vp' {A: Type} (P: A -> Type) {x y: A} (p: x ≡ y) (z: P x)
+  : p E# p^E E# z ≡ z.
+Proof.
+  destruct p; reflexivity.
+Defined.
+
 Definition Etransport_compose {A B : Type} {x y : A} (P : B -> Type) (f : A -> B) 
            (p : x ≡ y) (z : P (f x)) :
   Etransport (λ x0 : A, P (f x0)) p z ≡ Etransport P (Eap f p) z.
@@ -54,12 +60,25 @@ Proof.
 Defined.
 
 Definition Etransport_concat  {A : Type } {a b c: A} (P : A → Type)
-           (p : a ≡ b) (q : b ≡ c) (u : P a) : q E# (p E# u) ≡ p E@ q E# u.
+           (p : a ≡ b) (q : b ≡ c) (u : P a) : q E# (p E# u) ≡ (p E@ q) E# u.
 Proof.
   destruct p,q. reflexivity.
 Defined.
 
-(* Just an alias *)
-Definition Econcat_inv {A : Type } {a b : A} (P : A → Type) (p : a = b) (u : P a)
-  := Etransport_Vp P p u.
+Definition Econcat_inv_l {A : Type } {a b : A} (p : a = b)
+  : p E@ (p^E) ≡ eq_refl.
+Proof.
+  destruct p. reflexivity.
+Defined.
 
+Definition Econcat_inv_r {A : Type } {a b : A} (p : a = b)
+  : p^E E@ p ≡ eq_refl.
+Proof.
+  destruct p. reflexivity.
+Defined.
+
+Lemma Eap_inv {A B : Type} (f : A -> B) {x y: A} (p: x ≡ y)
+  : (Eap f p)^E ≡ Eap f p^E.
+Proof.
+  destruct p; reflexivity.
+Defined.
