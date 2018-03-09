@@ -82,3 +82,9 @@ Lemma Eap_inv {A B : Type} (f : A -> B) {x y: A} (p: x ≡ y)
 Proof.
   destruct p; reflexivity.
 Defined.
+
+Definition happly {A B : Type} {f g : A → B} : f = g -> ∀ x, f x = g x.
+Proof.
+  intros p x.
+  destruct p. reflexivity.
+Defined.
