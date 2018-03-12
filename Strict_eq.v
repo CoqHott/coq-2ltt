@@ -83,7 +83,13 @@ Proof.
   destruct p; reflexivity.
 Defined.
 
-Definition happly {A B : Type} {f g : A → B} : f = g -> ∀ x, f x = g x.
+Definition Ehapply {A B : Type} {f g : A → B} : f = g -> ∀ x, f x = g x.
+Proof.
+  intros p x.
+  destruct p. reflexivity.
+Defined.
+
+Definition Ehapply_dep {A : Type} {B : A -> Type} {f g : ∀ a, B a} : f = g -> ∀ x, f x = g x.
 Proof.
   intros p x.
   destruct p. reflexivity.

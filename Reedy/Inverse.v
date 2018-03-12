@@ -72,7 +72,7 @@ Section Invcat.
      apply (exist _ p₁). destruct p₁. simpl in *. apply p₂.
  Qed.
 
- Class InvCat (C : Category) :=
+ Class InvCat (C : Category) : Type :=
    { φ_ic : C ⇒ ℕop;
      φ_reflects_id : ReflectsIds φ_ic }.
  
