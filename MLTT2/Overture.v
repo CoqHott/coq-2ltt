@@ -134,6 +134,8 @@ Record Contr (A: Type) {FibA: Fibrant A} :=
     contr : ∀ x, center = x }.
 
 
+Definition isSet (A : TypeF) := ∀ (a b : A) (p q : a = b), p = q. 
+
 
 (* ****** destruct_path tactic ****** *)
 
