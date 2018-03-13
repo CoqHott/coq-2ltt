@@ -1,4 +1,4 @@
-(* -*- coq-prog-args: ("-top" "Reedy.Overture") -*-  *)
+(* -*- coq-prog-args: ("-top" "Reedy") -*-  *)
 
 From Categories Require Import Category.
 From Categories Require Import Functor.

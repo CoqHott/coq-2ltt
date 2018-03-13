@@ -48,7 +48,7 @@ Definition forget (C : Category) (c : C) : (c // C) ⇒ C :=
        FA := λ (a b : c // C) (f : a ⟶ b), CMH_right (proj1_sig f);
        F_id := λ a, eq_refl _;
        F_compose := λ a b c f g, eq_refl _ |}.
-Notation "Uˢ" := Type_Cat.
+Notation "'Uˢ'" := Type_Cat.
 
 Section MatchingObject.
 

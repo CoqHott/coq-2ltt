@@ -1,3 +1,5 @@
+(* -*- coq-prog-args: ("-top" "Reedy") -*-  *)
+
 From ModelStructure Require Import MLTT2.Overture.
 From ModelStructure Require Import Reedy.Overture.
 From ModelStructure Require Import Strict_eq.
