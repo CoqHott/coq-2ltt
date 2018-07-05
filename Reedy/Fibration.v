@@ -1,5 +1,6 @@
 (* -*- coq-prog-args: ("-top" "Reedy") -*-  *)
 From ModelStructure Require Import MLTT2.Overture.
+From ModelStructure Require Import Strict_eq.
 From ModelStructure Require Import Reedy.Overture.
 From ModelStructure Require Import Reedy.Iso.
 
@@ -30,3 +31,28 @@ Definition fibration {E B : Type} (p : E → B) : Type :=
 
 Definition fibration_alt {E B : Type} (p : E → B) :=
   Π (b : B), Fibrant (fibreˢ p b).
+
+Lemma fibrations_iff {E B : Type} (p : E → B) : fibration p <-> fibration_alt p.
+Proof.
+  split.
+  - intros F. destruct F as [F₁ F₂].
+    refine (λ x, StrictIso_Fibrant _ _ _).
+  - intros F. unfold fibration.
+    unfold fibration_alt in *.
+    pose (λ b, Build_TypeF (fibreˢ p b)) as Fam.
+    exists Fam.
+    intros. unfold Fam. apply SI_refl.
+Qed.
+
+Module Reedy.
+
+(* namespace reedy *)
+(*   universe variable u *)
+(*   variables {C : Category.{1 1}} [invcat C] *)
+
+(*   -- ref:def:reedy-fibration *)
+(*   -- Definition 3.12 *)
+(*   definition is_reedy_fibrant [class] (X : C ⇒ Type_category) := *)
+(*     Π z, is_fibration_alt (matching_obj_map X z) *)
+(* end reedy *)
+End Reedy.

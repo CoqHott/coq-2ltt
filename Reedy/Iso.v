@@ -21,25 +21,39 @@ Class StrictIso (A B : Type) :=
 
 Notation "A ≃ˢ B" := (StrictIso A B) (at level 70).
 
-Instance transitive_strict_iso {A B C : Type} (φ : A ≃ˢ B) (ψ : B ≃ˢ C) : A ≃ˢ C.
-  destruct φ as [f g l r].
-  destruct ψ as [f' g' l' r'].
-  refine {| to:= f' ∘ f ;
-            from := g ∘ g';
-            left_inv := _;
-            right_inv := _ |}.
-- intros. rewrite l',l. reflexivity.
-- intros. rewrite r,r'. reflexivity.
-Qed.
-
-(* Notation "[| x ≡ y :: p ; '___' ≡ z :: q ; '___' ≡ .. ; '___' ≡ u :: v |]" := *)
-(*   (@Econcat _ x y z p (@Econcat _ y z z q .. (@Econcat _ _ _ _ v eq_refl) ..)) (at level 70). *)
-(*   (cons    x (cons    y .. (cons    z nil    ) ..)) *)
-
 Definition to_fn {A B : Type} (e : StrictIso A B) : A → B := @to A B e.
 Infix "∙" := (to_fn) (at level 70).
 
-Module StrictIso.
+
+Section StrictIso.
+
+  Definition SI_symm {A B : Type} (φ : A ≃ˢ B) : B ≃ˢ A :=
+    {| to:= from ;
+       from := to;
+       left_inv := λ x, right_inv _ ▹ˢ eq_refl;
+       right_inv := λ x, left_inv _ ▹ˢ eq_refl |}.
+
+  Instance SI_trans {A B C : Type} (φ : A ≃ˢ B) (ψ : B ≃ˢ C) : A ≃ˢ C.
+    destruct φ as [f g l r].
+    destruct ψ as [f' g' l' r'].
+    refine {| to:= f' ∘ f ;
+              from := g ∘ g';
+              left_inv := _;
+              right_inv := _ |}.
+  - intros. rewrite l',l. reflexivity.
+  - intros. rewrite r,r'. reflexivity.
+  Defined.
+
+  Definition SI_refl {A : Type} : A ≃ˢ A :=
+    {| to:= idmap;
+       from := idmap;
+       left_inv := λ x, eq_refl;
+       right_inv := λ x, eq_refl |}.
+
+(* Notation "[| x ≡ y :: p ; '___' ≡ z :: q ; '___' ≡ .. ; '___' ≡ u :: v |]" := *)
+(*   (@Econcat _ x y z p (@Econcat _ y z z q .. (@Econcat _ _ _ _ v eq_refl) ..)) (at level 70). *)
+  (*   (cons    x (cons    y .. (cons    z nil    ) ..)) *)
+
   Instance pi_congr₁ {A A' : Type} {F : A'  → Type} (φ : A ≃ˢ A')
     : (Π (a : A), F (φ ∙ a)) ≃ˢ (Π (a : A'), F a).
   Proof.
@@ -124,3 +138,7 @@ Module StrictIso.
   Qed.
 
 End StrictIso.
+
+(* In this development, we assume that fibrant type are closed under strict isomorphims *)
+
+Axiom StrictIso_Fibrant : Π (A B: Type) {FibA : Fibrant A}, A ≃ˢ B → Fibrant B.
