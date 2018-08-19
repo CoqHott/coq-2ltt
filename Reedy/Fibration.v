@@ -15,7 +15,7 @@ Lemma fibre_projection {X : Type}{Y : X → Type}(x : X)
 Proof.
   unfold fibre_s.
   pose (λ (a: (Σ (a : Σ b : X, Y b), a.1 ≡ x)), a.2 ▹ˢ a.1.2) as f.
-  (* NOTE: next statement builds a term wrong type *)
+  (* NOTE: next statement builds a term of a wrong type *)
   pose (λ (a : Y x), ((x; a); @eq_refl _ _)) as _g.
   (* To get correct type we have to provide the type family explicitly *)
   pose (λ (a : Y x), (exist (λ y, y.1 ≡ x) (exist _ x a) eq_refl)) as g.

@@ -30,5 +30,7 @@ Reedy/Inverse.v
 Reedy/Iso.v
 Reedy/Matching.v
 Reedy/Fibration.v
+Reedy/Reedy.v
 
 Examples/PathIndFromTransport.v
+Examples/Misc.v

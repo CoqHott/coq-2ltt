@@ -18,7 +18,6 @@ From ModelStructure Require Import Strict_eq.
 Require Import FunctionalExtensionality.
 
 Import SubCategory.
-Check CoSlice.
 
 (* ref:def:reduced-coslice *)
 (*  Definition 3.7 *)
