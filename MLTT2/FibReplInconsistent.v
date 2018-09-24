@@ -1,10 +1,11 @@
-From ModelStructure Require Import MLTT2.Overture.
-From ModelStructure Require Import Reedy.Overture.
+From TLTT Require Import MLTT2.Overture.
+
 
 (* Introducing some notation *)
 
 Notation "'reflˢ'" := (eq_refl) : path_scope.
 Notation "'refl'" := (idpath) : path_scope.
+Notation "'Π' x .. y , P" := (forall x, .. (forall y, P) ..) (at level 200, x binder, y binder, right associativity) : type_scope.
 
 (* Definitions from MLTT2F *)
 Module Export FibrantReplacement.

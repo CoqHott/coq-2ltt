@@ -1,4 +1,5 @@
-Require Export MyTacs.
+(* -*- coq-prog-args: ("-top" "TTLT.MLTT2.Overture") -*-  *)
+Require Export TLTT.MyTacs.
 
 
 Notation idmap := (fun x => x).

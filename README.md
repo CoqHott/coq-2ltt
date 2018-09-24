@@ -3,7 +3,7 @@
 In this repository, you can find the emulation of two HTS-like system in Coq.
 
 * the first one (in directory [MLTT2](MLTT2)) is very close to the original HTS system [1] or to the one presented in [2]
-	
+
 * the second one (in directory [MLTT2F](MLTT2F)) use a finer notion of fibrancy, which allow to add a fibrant replacement
 
 [1] Vladimir Voevodsky. A simple type system with two identity types. Unpublished notes, http://uf-ias-2012.wikispaces.com/file/view/HTS.pdf, 2013.
@@ -14,11 +14,10 @@ In this repository, you can find the emulation of two HTS-like system in Coq.
 
 ## Compilation ##
 
-* This development compiles with Coq8.5
-* To compile simply run
-    * ` ./configure ` to produce the Makefile
-    * ` make ` to compile
-	
+* This development compiles with Coq8.7
+* To compile simply run ` make `
+
+
 ## Plugin Myrewrite ##
 
 To emulate HTS, we use a private inductive type to define path identity types,
@@ -34,15 +33,10 @@ Another drawback of the private inductive type is that it breaks some tactics, a
 To solve this problem, we defined a tactic `destruct_path` which revert all hypothesis depending on
 the equality considered, apply paths_ind, and then reintroduce the reverted hypothesis.
 
-## Coq dpd-graph ##
-
-To generate dependency graphs of the development you will need
-Coq dpd-graph, at least [this commit](https://github.com/ybertot/coq-dpdgraph/commit/94e7db4ddb1f15cf46d17691cfc5375574053796).
-Opam version should be working.
 
 ## Description of files ##
 
-Common to [MLTT2](MLTT2) and [MLTT2F](MLTT2F):
+Project root:
 
 * `Overture.v` contains basic definitions and notations (sigma types, ...) and the definition of a strict equality
 
@@ -59,10 +53,9 @@ In each directory [MLTT2](MLTT2) and [MLTT2F](MLTT2F):
 
 * `Equivalences.v` contains the definition of type theoretic equivalences
 
-* `Cylinders.v` contains the definition of cylinders
 
-* `Model_structure.v` contains the definition of fibrations, cofibrations, ... and the fact that they form a model structure
-
+Only in [MLTT2](MLTT2):
+* `FibReplInconsistent.v` contains a proof that MLTT2 is incompatible with the fibrant replacement.
 
 Only in [MLTT2F](MLTT2F):
 

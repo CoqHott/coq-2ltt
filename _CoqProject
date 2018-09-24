@@ -1,4 +1,4 @@
--R . ModelStructure
+-R . TLTT
 -I src
 
 
@@ -10,27 +10,16 @@ src/myrewrite2.mllib
 MyTacs.v
 Overture.v
 Strict_eq.v
-Category.v
 
 MLTT2/Overture.v
 MLTT2/Path_eq.v
 MLTT2/Equivalences.v
-MLTT2/Cylinder.v
-MLTT2/Model_structure.v
+MLTT2/FibReplInconsistent.v
 
 MLTT2F/Overture.v
 MLTT2F/Path_eq.v
 MLTT2F/Equivalences.v
-MLTT2F/Cylinder.v
 MLTT2F/Fibrant_replacement.v
-MLTT2F/Model_structure.v
-
-Reedy/Overture.v
-Reedy/Inverse.v
-Reedy/Iso.v
-Reedy/Matching.v
-Reedy/Fibration.v
-Reedy/Reedy.v
 
 Examples/PathIndFromTransport.v
 Examples/Misc.v

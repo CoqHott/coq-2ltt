@@ -1,5 +1,4 @@
-(* -*- coq-prog-args: ("-top" "ModelStructure.MLTT2.Overture") -*-  *)
-Require Export ModelStructure.Overture.
+Require Export TLTT.Overture.
 
 Axiom Fibrant : Type -> Type.
 Existing Class Fibrant.

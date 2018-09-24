@@ -1,6 +1,6 @@
-From ModelStructure Require Import MLTT2.Overture.
+From TLTT Require Import MLTT2.Overture.
 
-(* sigT is redefined using primitive projections in ModelStructure.Overture.*)
+(* sigT is redefined using primitive projections in TLTT.Overture.*)
 Notation "'Σ' x .. y , P" := (sigT (fun x => .. (sigT (fun y => P)) ..)) (at level 200, x binder, y binder)  : type_scope.
 
 Notation "x = y :> A" := (@paths A x y) : type_scope.

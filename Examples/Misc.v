@@ -1,5 +1,5 @@
-From ModelStructure Require Import MLTT2.Overture.
-From ModelStructure Require Import MLTT2.Path_eq.
+From TLTT Require Import MLTT2.Overture.
+From TLTT Require Import MLTT2.Path_eq.
 
 Definition isProp (A : TypeF) := forall (a b : A), a = b.
 

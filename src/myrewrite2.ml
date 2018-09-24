@@ -1,6 +1,6 @@
 open Names
 
-let mp = ModPath.MPfile (DirPath.make (List.rev_map Id.of_string ["ModelStructure"; "MLTT2F"; "Overture"]))
+let mp = ModPath.MPfile (DirPath.make (List.rev_map Id.of_string ["TLTT"; "MLTT2F"; "Overture"]))
 let mp' = ModPath.MPdot (mp, Label.make "Paths")
 let eq = MutInd.make2 mp' (Label.make "paths")
 

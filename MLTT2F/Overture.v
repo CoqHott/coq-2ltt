@@ -1,5 +1,5 @@
-(* -*- coq-prog-args: ("-top" "ModelStructure.CtxFibrancy.Overture") -*-  *)
-Require Export ModelStructure.Overture.
+(* -*- coq-prog-args: ("-top" "TLTT.CtxFibrancy.Overture") -*-  *)
+Require Export TLTT.Overture.
 
 
 Axiom FibrantF : forall {A: Type} (P: A -> Type), Type.
