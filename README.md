@@ -1,8 +1,8 @@
-# Emulation of HTS in Coq
+# Two-level type theory in Coq
 
-In this repository, you can find the emulation of two HTS-like system in Coq.
+In this repository, you can find the emulation of two HTS-like systems in Coq.
 
-* the first one (in directory [MLTT2](MLTT2)) is very close to the original HTS system [1] or to the one presented in [2,3]
+* the first one (in directory [MLTT2](MLTT2)) is close to the original HTS system [1] or to the one presented in [2,3]
 
 * the second one (in directory [MLTT2F](MLTT2F)) use a finer notion of fibrancy, which allow to add a fibrant replacement
 
