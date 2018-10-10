@@ -2,7 +2,7 @@
 
 In this repository, you can find the emulation of two HTS-like system in Coq.
 
-* the first one (in directory [MLTT2](MLTT2)) is very close to the original HTS system [1] or to the one presented in [2]
+* the first one (in directory [MLTT2](MLTT2)) is very close to the original HTS system [1] or to the one presented in [2,3]
 
 * the second one (in directory [MLTT2F](MLTT2F)) use a finer notion of fibrancy, which allow to add a fibrant replacement
 
@@ -10,6 +10,7 @@ In this repository, you can find the emulation of two HTS-like system in Coq.
 
 [2] Thorsten Altenkirch, Paolo Capriotti, and Nicolai Kraus. Extending homotopy type theory with strict equality. Computer Science Logic, 2016, Marseille, France.
 
+[3] Danil Annenkov, Paolo Capriotti, and Nicolai Kraus. Two-Level Type Theory and Applications. Preprint on arXiv: https://arxiv.org/abs/1705.03307
 
 
 ## Compilation ##
