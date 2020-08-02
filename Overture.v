@@ -1,6 +1,7 @@
 (* -*- coq-prog-args: ("-top" "TTLT.MLTT2.Overture") -*-  *)
 Require Export TLTT.MyTacs.
 
+Global Set Warnings "-notation-overridden".
 
 Notation idmap := (fun x => x).
 
