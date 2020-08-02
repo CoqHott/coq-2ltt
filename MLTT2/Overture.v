@@ -3,6 +3,7 @@ Require Export TLTT.Overture.
 Axiom Fibrant : Type -> Type.
 Existing Class Fibrant.
 
+Declare Scope Fib_scope.
 Notation "'FibrantF' P" := (forall x, Fibrant (P x)) (at level 10) : Fib_scope.
 Notation "'FibrantF2' P" := (forall x y, Fibrant (P x y)) (at level 10) : Fib_scope.
 Open Scope Fib_scope.
@@ -21,14 +22,19 @@ Global Existing Instance TypeF_F.
 Axiom Fibrant_forall
   : forall A (B: A -> Type), Fibrant A -> (forall x, Fibrant (B x)) -> Fibrant (forall x, B x).
 
+Global Existing Instance Fibrant_forall.
+
 Axiom Fibrant_sigma
   : forall A (B: A -> Type), Fibrant A -> (forall x, Fibrant (B x)) -> Fibrant (sigT B).
+
+Global Existing Instance Fibrant_sigma.
 
 (* Axiom Fibrant_Type : Fibrant Type. *)
 
 (* Axiom Fibrant_TypeF : Fibrant FType. *)
 
 Axiom Fibrant_unit : Fibrant unit.
+Global Existing Instance Fibrant_unit.
 
 Module Export Paths.
   Private Inductive paths {A : Type} (a : A) : A -> Type :=
@@ -52,7 +58,7 @@ Module Export Paths.
     end.
     
   Axiom Fibrant_paths : forall (A: Type) {FibA: Fibrant A} (x y: A), Fibrant (paths x y).
-
+  Existing Instance Fibrant_paths.
   
   (** The inverse of a path. *)
   Definition inverse {A : Type} {FibA: Fibrant A} {x y : A} (p : paths x y) : paths y x
@@ -70,6 +76,8 @@ Module Export Paths.
   (* Hence this plugin forces Coq to use paths_rec and paths_rec' instead. *)
   Declare ML Module "myrewrite".
 End Paths.
+
+Global Existing Instance Fibrant_paths.
 
 Arguments paths_rec [A _] a P [_] f y p.
 
@@ -109,6 +117,7 @@ Defined.
 
 Arguments concat {A FibA x y z} !p !q.
 
+Declare Scope path_scope.
 Delimit Scope path_scope with path.
 Open Scope path_scope.
 

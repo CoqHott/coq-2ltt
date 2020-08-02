@@ -50,6 +50,7 @@ Defined.
 Open Scope type_scope.
 
 (* ********* Strict Eq ********* *)
+Declare Scope eq_scope.
 Delimit Scope eq_scope with eq.
 Open Scope eq_scope.
 
