@@ -5,7 +5,10 @@
 ##Coq
 *.vo
 *.glob
+*.d
 *.v.d
+*.vos
+*.vok
 *~
 Makefile.coq
 Makefile.coq.conf
