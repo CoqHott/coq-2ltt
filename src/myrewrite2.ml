@@ -20,8 +20,8 @@ let () =
   let open Eqschemes in
   let hack () =
     List.iter (fun (sk, kn) -> hack_replace_const sk kn) [
-      rew_l2r_scheme_kind, KerName.make2 mp' (Label.make "paths_rec'");
-      rew_r2l_scheme_kind, KerName.make2 mp' (Label.make "paths_rec");
+      rew_l2r_scheme_kind, KerName.make mp' (Label.make "paths_rec'");
+      rew_r2l_scheme_kind, KerName.make mp' (Label.make "paths_rec");
     ]
   in
   Mltop.declare_cache_obj hack "myrewrite2"
