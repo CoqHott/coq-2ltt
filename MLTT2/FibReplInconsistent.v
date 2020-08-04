@@ -25,6 +25,8 @@ Module Export FibrantReplacement.
   Defined.
 End FibrantReplacement.
 
+Global Existing Instance Fibrant_repl.
+
 Definition recR {X P} {FibP: Fibrant P} (H: X -> P)
   : repl X -> P
   := elimR (λ _ : repl X, P) H.

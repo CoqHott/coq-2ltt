@@ -9,6 +9,7 @@ Module Export FibrantReplacement.
   Arguments η {_} _.
   
   Axiom Fibrant_repl : forall X, Fibrant (repl X).
+  Global Existing Instance Fibrant_repl.
   
   Definition repl_ind {X} (P: repl X -> Type) {FibP: FibrantF P}
              (H: forall x : X, P (η x))
@@ -25,6 +26,7 @@ Definition repl_rec {X P} {FibP: Fibrant P} (H: X -> P)
 
 Axiom FibrantF_repl_rec : ∀ A (P: A -> Type) {FibP: FibrantF P},
     FibrantF (repl_rec P).
+Global Existing Instance FibrantF_repl_rec.
   
 Definition repl_sigma {A} (B: repl A -> Type) {FibB: FibrantF B}
   : sigT B -> repl (sigT (B o η)).

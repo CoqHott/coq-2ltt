@@ -5,6 +5,7 @@ Require Export TLTT.Overture.
 Axiom FibrantF : forall {A: Type} (P: A -> Type), Type.
 Existing Class FibrantF.
 
+Declare Scope Fib_scope.
 Notation "'Fibrant' A" := (FibrantF (λ _:unit, A)) (at level 10) : Fib_scope.
 Notation "'FibrantF2' P" := (FibrantF (λ w, P w.1 w.2)) (at level 10) : Fib_scope.
 Notation "'FibrantF3' P" := (FibrantF (λ w, P w.1 w.2.1 w.2.2)) (at level 10) : Fib_scope.
@@ -23,15 +24,18 @@ Global Existing Instance TypeF_F.
 
 Axiom FibrantF_forall : ∀ {A: Type} {B: A -> Type} {C: ∀ x, B x -> Type},
     FibrantF B -> FibrantF2 C -> FibrantF (λ x, ∀ y, C x y).
+Global Existing Instance FibrantF_forall.
 
 Axiom FibrantF_sigma : ∀ {A: Type} {B: A -> Type} {C: ∀ x, B x -> Type},
     FibrantF B -> FibrantF2 C -> FibrantF (λ x, ∃ y, C x y).
+Global Existing Instance FibrantF_sigma.
 
 Axiom Fibrant_Type : Fibrant Type.
+Global Existing Instance Fibrant_Type.
 
 Axiom FibrantF_compose
   : forall A (B: A -> Type) {FibB: FibrantF B} A' (f: A' -> A), FibrantF (B o f).
-
+Global Existing Instance FibrantF_compose.
 (* Axiom Fibrant_TypeF : Fibrant FType. *)
 
 Instance Fibrant_FibrantF A (B: A -> Type) {FibP: FibrantF B}
@@ -96,7 +100,8 @@ Module Export Paths.
 
   Axiom FibrantF_paths : forall {Δ} (A : Δ -> Type) (t t' : forall x, A x),
       FibrantF A -> FibrantF (fun x => paths (t x) (t' x)).
-
+  Global Existing Instance FibrantF_paths.
+  
   (** The inverse of a path. *)
   Definition inverse {A : Type} {FibA: Fibrant A} {x y : A} (p : paths x y) : paths y x
     := @paths_rec A FibA x (fun y => paths y x) _ idpath y p.
@@ -153,6 +158,7 @@ Defined.
 
 Arguments concat {A FibA x y z} !p !q.
 
+Declare Scope path_scope.
 Delimit Scope path_scope with path.
 Open Scope path_scope.
 
